@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="ReMIND.Client.Elements.DualListPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d" Foreground="#266986" FontFamily="../Fonts/#Lexend Deca"
+             RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
+             IsEnabledChanged="UserControl_IsEnabledChanged">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="SwapButton" TargetType="Button">
+            <Border Cursor="Hand">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Grid Grid.Row="4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <!--#region LEFT LIST-->
+        <TextBlock Text="{Binding Path=LeftText, Mode=TwoWay, FallbackValue=LEFT_LIST}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Grid.Column="0" FontSize="10"/>
+        <Border Margin="0 0 2 0" Background="#FFF" BorderBrush="#ECECEC" BorderThickness="1"
+                    Grid.Row="1" Grid.Column="0">
+            <Grid VerticalAlignment="Top" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="18"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="6"/>
+                </Grid.ColumnDefinitions>
+
+                <local:TextInput Height="18" Grid.ColumnSpan="2" ImageSource="../Resources/search.png" x:Name="LeftFilter"
+                                 Placeholder="Filter" TextForeground="#266986" TextBackground="#FFF" RenderOptions.EdgeMode="Aliased"
+                                 BorderColor="#ECECEC" FontSize="9" ShadowOpacity="0" InputTextChanged="LeftFilter_TextChanged"/>
+
+                <ScrollViewer x:Name="LeftListScroller" Grid.Row="1" VerticalScrollBarVisibility="Hidden"
+                              ScrollChanged="LeftListScroller_ScrollChanged">
+                    <StackPanel x:Name="LeftListStackPanel">
+
+                    </StackPanel>
+                </ScrollViewer>
+                <Border x:Name="LeftListScrollBorder" Background="#266986" Grid.Row="1" Grid.Column="1"
+                            Margin="1 1 1 0" VerticalAlignment="Top"/>
+            </Grid>
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.25" ShadowDepth="2" BlurRadius="2" Direction="270"/>
+            </Border.Effect>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region RIGHT LIST-->
+        <TextBlock Text="{Binding Path=RightText, Mode=TwoWay, FallbackValue=RIGHT_LIST}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Grid.Column="2" FontSize="10"/>
+        <Border Margin="2 0 0 0" Background="#FFF" BorderBrush="#ECECEC" BorderThickness="1"
+                    Grid.Row="1" Grid.Column="2" x:Name="RightSideBorder">
+            <Grid VerticalAlignment="Top" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="18"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="6"/>
+                </Grid.ColumnDefinitions>
+
+                <local:TextInput Height="18" Grid.ColumnSpan="2" ImageSource="../Resources/search.png" x:Name="RightFilter"
+                                 Placeholder="Filter" TextForeground="#266986" TextBackground="#FFF"
+                                 BorderColor="#ECECEC" FontSize="9" ShadowOpacity="0" InputTextChanged="RightFilter_TextChanged"/>
+
+                <ScrollViewer x:Name="RightListScroller" Grid.Row="1" VerticalScrollBarVisibility="Hidden"
+                                  ScrollChanged="RightListScroller_ScrollChanged">
+                    <StackPanel x:Name="RightListStackPanel">
+
+                    </StackPanel>
+                </ScrollViewer>
+                <Border x:Name="RightListScrollBorder" Background="#266986" Grid.Row="1" Grid.Column="1"
+                            Margin="1 1 1 0" VerticalAlignment="Top"/>
+            </Grid>
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.25" ShadowDepth="2" BlurRadius="2" Direction="270"/>
+            </Border.Effect>
+        </Border>
+        <!--#endregion-->
+
+        <StackPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
+            <Button x:Name="AddObjectButton" Margin="0 2" Template="{StaticResource SwapButton}"
+                        Click="AddObjectButton_Click">
+                <Image Source="Icons/RightArrow.png" Height="20" Width="20"/>
+                <Button.Effect>
+                    <DropShadowEffect BlurRadius="2" ShadowDepth="1" Opacity="0.3" Direction="270"/>
+                </Button.Effect>
+            </Button>
+            <Button x:Name="RemoveObjectButton" Margin="0 2" Template="{StaticResource SwapButton}"
+                        Click="RemoveObjectButton_Click">
+                <Image Source="Icons/LeftArrow.png" Height="20" Width="20"/>
+                <Button.Effect>
+                    <DropShadowEffect BlurRadius="2" ShadowDepth="1" Opacity="0.3" Direction="270"/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

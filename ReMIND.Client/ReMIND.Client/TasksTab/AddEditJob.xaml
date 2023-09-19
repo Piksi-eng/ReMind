@@ -1,0 +1,151 @@
+﻿<UserControl x:Class="ReMIND.Client.TasksTab.AddEditJob"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ReMIND.Client.TasksTab"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+             xmlns:xtd="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" Foreground="#266986" d:DesignWidth="430"
+             d:DesignHeight="435" Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="CleanRButton" TargetType="RadioButton">
+            <StackPanel Orientation="Horizontal" Height="{TemplateBinding Height}"
+                        Cursor="Hand" Background="Transparent" Margin="5 0">
+                <Grid Margin="0 0 3 0">
+                    <Ellipse x:Name="StrokeEllipse" StrokeThickness="2" Stroke="#266986"
+                             Height="12" Width="12"/>
+                    <Ellipse x:Name="CheckedEllipse" Fill="#266986"
+                             Height="6" Width="6"/>
+                </Grid>
+                <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                           VerticalAlignment="Center" FontFamily="../Fonts/#Lexend Deca"
+                           FontSize="10" Foreground="#266986"/>
+            </StackPanel>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter TargetName="CheckedEllipse" Property="Visibility" Value="Hidden"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="StrokeEllipse" Property="Fill" Value="#20266986"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Border Background="#FFF" BorderBrush="#E5E5E5" Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--#region Assigning people-->
+            <elements:DualListPicker Grid.RowSpan="5" Grid.Column="1" Grid.ColumnSpan="2"
+                                     LeftText="EMPLOYEES" RightText="ASSIGNED" Margin="6 0 0 10"
+                                     x:Name="AccountsDualList"/>
+            <!--#endregion-->
+
+            <!--#region Date & Recurrment-->
+            <elements:CleanDatePicker Grid.Row="5" Height="32" VerticalAlignment="Top" x:Name="JobDatePicker"/>
+
+            <StackPanel Grid.Row="5" Grid.Column="1" Height="32" VerticalAlignment="Top" x:Name="RepeatStackPanel"
+                        Margin="6 0 0 0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Text="REPEAT" VerticalAlignment="Center" FontFamily="../Fonts/#Lexend Deca"
+                           FontSize="10" Margin="0 0 1 0"/>
+                <elements:CleanCheckbox Width="16" Height="16" Margin="1" CheckedChanged="CleanCheckbox_CheckedChanged"
+                                        x:Name="RepeatCheckbox"/>
+
+                <StackPanel Orientation="Horizontal" IsEnabled="False" x:Name="DateSelectionStackPanel">
+                    <TextBlock Text="EVERY" VerticalAlignment="Center" FontFamily="../Fonts/#Lexend Deca"
+                               FontSize="10" Margin="4 0 2 0" x:Name="TextBlockThatSaysEVERY" Opacity="0.5"/>
+                    <TextBox BorderBrush="#80266986" BorderThickness="1" Width="16" Height="16"
+                             MaxLength="2" TextChanged="TextBox_TextChanged" FontFamily="../Fonts/#Lexend Deca"
+                             FontSize="10" Foreground="#266986" CaretBrush="#266986" Text="1"
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             VerticalAlignment="Center" x:Name="JobMultiplierTextBox"/>
+                    <RadioButton Content="Day" GroupName="Recurring" VerticalAlignment="Center" IsChecked="True"
+                                 Margin="3 0 0 0" Template="{StaticResource CleanRButton}" Height="32"/>
+                    <RadioButton Content="Week" GroupName="Recurring" VerticalAlignment="Center"
+                                 Template="{StaticResource CleanRButton}" Height="32" x:Name="WeekRecurring"/>
+                    <RadioButton Content="Month" GroupName="Recurring" VerticalAlignment="Center"
+                                 Template="{StaticResource CleanRButton}" Height="32" x:Name="MonthRecurring"/>
+                </StackPanel>
+            </StackPanel>
+            <!--#endregion-->
+
+            <!--#region Description-->
+            <TextBox Grid.Row="6" Grid.RowSpan="3" Grid.ColumnSpan="3" Margin="0 10 0 0"
+                         CaretBrush="#266986" Foreground="#266986" FontFamily="../Fonts/#Lexend Deca"
+                         BorderBrush="#ECECEC" BorderThickness="1" Name="DescriptionBox" TextWrapping="Wrap">
+                <TextBox.Effect>
+                    <DropShadowEffect Opacity="0.25" ShadowDepth="1" BlurRadius="2" Direction="270"/>
+                </TextBox.Effect>
+            </TextBox>
+            <!--#endregion-->
+
+            <!--#region Buttons-->
+            <elements:CleanButton Grid.Row="9" Grid.Column="0" DisplayText="ARCHIVE"
+                                  Height="32" Width="96" Margin="0 8 0 0" ButtonClicked="ArchiveButton_ButtonClicked"
+                                  HorizontalAlignment="Left" x:Name="ArchiveButton" Visibility="Hidden"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="9" Grid.Column="2"
+                    Margin="0 8 0 0">
+
+                <elements:CleanButton DisplayText="SAVE" x:Name="SaveButton"
+                                      Height="32" Width="96" ButtonClicked="SaveButton_ButtonClicked"/>
+                <elements:CleanButton DisplayText="CANCEL" Margin="4 0 0 0" ButtonClicked="CancelButton_ButtonClicked"
+                                      Height="32" Width="96" x:Name="CancelButton"/>
+
+            </StackPanel>
+            <!--#endregion-->
+
+            <!--#region Left Strip-->
+            <elements:TextInput Placeholder="Name" TextForeground="#266986" Height="32" x:Name="JobNameInput"
+                            BorderColor="#ECECEC" TextBackground="#FFF" FontSize="10" VerticalAlignment="Top"/>
+
+            <elements:SearchDropdown x:Name="WeightDropdown" Placeholder="Weight" Grid.Row="4"
+                                 Grid.RowSpan="5"/>
+
+            <elements:SearchDropdown x:Name="TagsDropdown" Placeholder="Type" Grid.Row="3"
+                                 Grid.RowSpan="5"/>
+
+            <elements:SearchDropdown x:Name="GroupsDropdown" Placeholder="Group" Grid.Row="2"
+                                 Grid.RowSpan="5"/>
+
+            <elements:SearchDropdown x:Name="TeamsDropdown" Placeholder="Team" Grid.Row="1"
+                                 Grid.RowSpan="5" SelectedItemChanged="TeamsDropdown_SelectedItemChanged"/>
+
+            <!--#endregion-->
+
+        </Grid>
+
+        <Border.Effect>
+            <DropShadowEffect Opacity="0.25" ShadowDepth="4" BlurRadius="4" Direction="270"/>
+        </Border.Effect>
+    </Border>
+</UserControl>

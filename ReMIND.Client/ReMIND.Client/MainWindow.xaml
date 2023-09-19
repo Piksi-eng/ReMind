@@ -1,0 +1,181 @@
+﻿<Window x:Class="ReMIND.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReMIND.Client"
+        xmlns:load="clr-namespace:ReMIND.Client.Loading"
+        xmlns:tabs="clr-namespace:ReMIND.Client.TitleBar"
+        mc:Ignorable="d" Icon="Resources/fanBlue.png"
+        Title="ReMIND Client" WindowStyle="None" AllowsTransparency="True"
+        Width="1280" Height="720" MinWidth="1280" MinHeight="720"
+        RenderOptions.BitmapScalingMode="HighQuality" Loaded="Window_Loaded"
+        RenderOptions.EdgeMode="Aliased" Closing="Window_Closing">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" ResizeBorderThickness="8"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <ControlTemplate x:Key="TitleBarButton" TargetType="Button">
+            <Grid Cursor="Hand">
+                <Rectangle x:Name="TBButton"
+                           Fill="Transparent" Opacity="0.5"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.85" ScaleY="0.85"
+                                            CenterX="0" CenterY="0"  />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SettingsPopup" TargetType="ToggleButton">
+            <Grid x:Name="TBSettings" Cursor="Hand" Background="#00E5E5E5" ToolTip="ReMIND Menu">
+                <Image x:Name="FanImage" Source="Resources/fanBlue.png" Margin="3"/>
+                <Border Width="12" Height="12" Background="{TemplateBinding Foreground}"
+                        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5 5 1 5">
+                    <TextBlock Foreground="#FFF" Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                               Margin="0" FontFamily="../Fonts/rbt/#Roboto" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="0" ShadowDepth="1" Direction="270" Opacity="0.4"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="TBSettings" Property="Background" Value="#00E5E5E5"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="TBSettings" Property="Background" Value="#005478"/>
+                    <Setter TargetName="FanImage" Property="Source" Value="Resources/fanWhite.png"/>
+                    <Setter TargetName="TBSettings" Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Opacity="0.6" ShadowDepth="4" Direction="315" BlurRadius="4"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Storyboard x:Key="openPopup">
+            <DoubleAnimation Storyboard.TargetName="PopupScale" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="PopupScale" Storyboard.TargetProperty="(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.08"/>
+        </Storyboard>
+        <Storyboard x:Key="closePopup">
+            <DoubleAnimation Storyboard.TargetName="PopupScale" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="PopupScale" Storyboard.TargetProperty="(ScaleTransform.ScaleY)" To="0" Duration="0:0:0.08"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <Border BorderBrush="#eff4ff" BorderThickness="1"
+            Background="Transparent">
+        <Grid x:Name="Container">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--#region Background-->
+            <Image Source="Resources/Background.jpg"
+               Grid.ColumnSpan="2" Grid.RowSpan="2"
+               Stretch="UniformToFill" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            <!--#endregion-->
+
+            <!--#region Titlebar-->
+            <Grid Background="Transparent" Grid.ColumnSpan="2" PreviewMouseDown="Grid_PreviewMouseDown"/>
+
+            <!--#region Popup & Tabs-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
+                        WindowChrome.IsHitTestVisibleInChrome="True">
+
+                <ToggleButton Background="#80e5e5e5" Template="{StaticResource SettingsPopup}"
+                              x:Name="PopupButton" Foreground="#D0480E" Content="!"><!--Foreground="#D0480E">-->
+                    <ToggleButton.Triggers>
+                        <EventTrigger RoutedEvent="ToggleButton.Checked" >
+                            <BeginStoryboard Storyboard="{StaticResource openPopup}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                            <BeginStoryboard Storyboard="{StaticResource closePopup}"/>
+                        </EventTrigger>
+                    </ToggleButton.Triggers>
+                </ToggleButton>
+                
+                <tabs:TabGroup x:Name="TabGroupControl" OnTabChanged="TabGroup_OnTabChanged"/>
+                
+            </StackPanel>
+            <!--#endregion-->
+            
+            <!--#region Control Buttons-->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"
+                        Background="#00266986"
+                        WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button Template="{StaticResource TitleBarButton}"
+                        Margin="14 12 12 12" Click="Minimize_Click">
+                    <Image Source="Resources/Minimize.png"/>
+                </Button>
+                <Button Template="{StaticResource TitleBarButton}"
+                        Margin="12 12 12 12" Click="Maximize_Click">
+                    <Image Source="Resources/Maximize.png"/>
+                </Button>
+                <Button Template="{StaticResource TitleBarButton}"
+                        Margin="12 12 14 12" Click="Close_Click">
+                    <Image Source="Resources/Close.png"/>
+                </Button>
+            </StackPanel>
+            <!--#endregion-->
+            
+            <!--#endregion-->
+
+            <!--#region Active Page-->
+            <Viewbox x:Name="TabPageViewbox" Grid.ColumnSpan="2" Grid.Row="1">
+            </Viewbox>
+            <!--#endregion-->
+
+            <TextBlock Text="©Samo Ventilatori, 2022" Grid.Row="1" Grid.Column="1"
+                       Foreground="#266986" FontFamily="/Fonts/#Lexend Deca"
+                       HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            
+            <!--#region Popup-->
+            <Viewbox Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Border Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <tabs:SettingsPopup OnPopupOutsideClicked="Popup_OnPopupOutsideClicked"
+                                        x:Name="SettingsPopupBorder"/>
+                    <Border.RenderTransform>
+                        <ScaleTransform x:Name="PopupScale" ScaleX="0" ScaleY="0"/>
+                    </Border.RenderTransform>
+                </Border>
+            </Viewbox>
+            <!--#endregion-->
+
+            <load:LoadingScreen x:Name="LoadingScreen" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="Collapsed"/>
+
+            <Border Grid.ColumnSpan="2" Grid.RowSpan="2" Background="#1000"
+                    Visibility="Collapsed" x:Name="BlurBorder"/>
+
+        </Grid>
+    </Border>
+
+    <Window.Effect>
+        <BlurEffect x:Name="WindowBlur" Radius="0"/>
+    </Window.Effect>
+
+</Window>

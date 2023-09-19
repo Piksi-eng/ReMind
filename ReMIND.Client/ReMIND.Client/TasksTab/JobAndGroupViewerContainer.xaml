@@ -1,0 +1,104 @@
+﻿<Window x:Class="ReMIND.Client.TasksTab.JobAndGroupViewerContainer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReMIND.Client.TasksTab"
+        xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+        mc:Ignorable="d" AllowsTransparency="True"
+        WindowStyle="None" Background="Transparent"
+        Title="JobView" Height="720" Width="1280"
+        Closing="Window_Closing" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="SwitchBtn" TargetType="ToggleButton">
+            <Grid Background="Transparent" Cursor="Hand">
+                <Border x:Name="BackgroundBorder" BorderBrush="#FAFAFA" BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="#FFF">
+                    <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" FontWeight="Medium"
+                               FontFamily="../Fonts/#Lexend Deca" Foreground="#C0266986" x:Name="ButtonText"/>
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="1" Direction="270" BlurRadius="0" Opacity="0.3"/>
+                    </Border.Effect>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="BackgroundBorder" Property="Background" Value="#266986"/>
+                    <Setter TargetName="ButtonText" Property="Foreground" Value="#FFF"/>
+                    <Setter TargetName="ButtonText" Property="FontSize" Value="11"/>
+                    <Setter Property="IsEnabled" Value="False"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ButtonText" Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="ButtonText" Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <!--nikola:todo-->
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.99*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.99*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.33*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.33*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1">
+            <local:AddEditJob x:Name="JobWindow" Height="435" Width="430"
+                              RequestWindowClose="Window_RequestWindowClose">
+                <local:AddEditJob.RenderTransform>
+                    <ScaleTransform ScaleX="0" ScaleY="0"/>
+                </local:AddEditJob.RenderTransform>
+                <local:AddEditJob.RenderTransformOrigin>
+                    <Point X="0.5" Y="0.5"/>
+                </local:AddEditJob.RenderTransformOrigin>
+            </local:AddEditJob>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1">
+            <local:AddEditGroup x:Name="GroupWindow" Height="435" Width="430"
+                                RequestWindowClose="Window_RequestWindowClose">
+                <local:AddEditGroup.RenderTransform>
+                    <ScaleTransform ScaleX="0" ScaleY="0"/>
+                </local:AddEditGroup.RenderTransform>
+                <local:AddEditGroup.RenderTransformOrigin>
+                    <Point X="0.5" Y="0.5"/>
+                </local:AddEditGroup.RenderTransformOrigin>
+            </local:AddEditGroup>
+        </Border>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom" x:Name="ToggleButtonStackPanel">
+            <ToggleButton Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                          Height="32" Width="64" Margin="0 4" Content="TASK"
+                          Template="{StaticResource SwitchBtn}" BorderThickness="1 1 0.5 1"
+                          Checked="TaskButton_Checked" x:Name="TaskButton"/>
+
+            <ToggleButton Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                          Height="32" Width="64" Margin="0 4" Content="GROUP" BorderThickness="0.5 1 1 1"
+                          Template="{StaticResource SwitchBtn}" x:Name="GroupButton"
+                          Checked="GroupButton_Checked"/>
+            <StackPanel.RenderTransform>
+                <ScaleTransform ScaleX="0" ScaleY="0"/>
+            </StackPanel.RenderTransform>
+            <StackPanel.RenderTransformOrigin>
+                <Point X="1" Y="1"/>
+            </StackPanel.RenderTransformOrigin>
+        </StackPanel>
+    </Grid>
+    
+</Window>
+ 

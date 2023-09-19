@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="ReMIND.Client.Management.Manager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Management"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d" Foreground="#266986" FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium"
+             d:DesignHeight="625" d:DesignWidth="799" RenderOptions.BitmapScalingMode="HighQuality"
+             RenderOptions.EdgeMode="Aliased">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="525"/>
+        </Grid.RowDefinitions>
+
+        <!--#region Header-->
+        <!-- a lot of unnecesary code ali samo sam kopirao tkd time&effort=0 -->
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="64">
+            <TextBlock Text="Management" FontFamily="../Fonts/rbt/#Roboto" VerticalAlignment="Center"
+                    FontSize="48" Margin="0 0 10 0" Name="MonthLabel">
+                <TextBlock.Effect>
+                    <DropShadowEffect Opacity="0.25" ShadowDepth="1.5" Direction="270" BlurRadius="0"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
+        <!--#endregion-->
+
+        <!--this is my fake drop shadow :3-->
+        <Border BorderBrush="Black" BorderThickness="1 0 1 4" Opacity="0.25"
+                Grid.Row="1" Margin="0 4 0 0">
+            <Border.Effect>
+                <BlurEffect Radius="4"/>
+            </Border.Effect>
+        </Border>
+
+        <!--#region Manager-->
+        <Border BorderBrush="#ECECEC" BorderThickness="0.5" Background="#CFFF"
+                Margin="0 0 0 4" Grid.Row="1" Height="521" Width="799">
+            <StackPanel Orientation="Horizontal">
+                
+                <!--#region Accounts-->
+                <StackPanel Height="510" Width="256" Margin="10 5 2.5 5">
+                    
+                    <elements:TextInput Placeholder="Filter Accounts" TextForeground="#266986"
+                                        ImageSource="../Resources/search.png" Margin="0 0 0 3" x:Name="AccountsSearchInput"
+                                        Height="32" Width="128" FontSize="10" InputTextChanged="Accounts_SearchChanged"
+                                        TextBackground="#FFF" BorderColor="#FAFAFA"/>
+
+                    <Border Height="475" Background="#FFF" BorderBrush="#FAFAFA" BorderThickness="1">
+                        <Grid Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="11"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ScrollViewer x:Name="AccountScroller" Height="469" VerticalScrollBarVisibility="Hidden"
+                                  ScrollChanged="AccountScroller_ScrollChanged" VerticalAlignment="Top">
+                                <StackPanel x:Name="AccountsList">
+                                </StackPanel>
+                            </ScrollViewer>
+
+                            <Border x:Name="AccountScrollBorder" Background="#266986" Grid.Column="1" Margin="2 0 2 0" VerticalAlignment="Top" Width="9"/>
+                        </Grid>
+                    </Border>
+
+                </StackPanel>
+                <!--#endregion-->
+                
+                <!--#region Teams-->
+                <StackPanel Height="510" Width="256" Margin="2.5 5 2.5 5">
+                    <elements:TextInput Placeholder="Filter Teams" TextForeground="#266986"
+                                        ImageSource="../Resources/search.png" Margin="0 0 0 3"
+                                        Height="32" Width="128" FontSize="10" InputTextChanged="Teams_SearchChanged"
+                                        TextBackground="#FFF" BorderColor="#FAFAFA"/>
+
+                    <Border Height="475" Background="#FFF" BorderBrush="#FAFAFA" BorderThickness="1">
+                        <Grid Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="11"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ScrollViewer x:Name="TeamScroller" Height="469" VerticalScrollBarVisibility="Hidden"
+                                  ScrollChanged="TeamScroller_ScrollChanged" VerticalAlignment="Top">
+                                <StackPanel x:Name="TeamsList"  HorizontalAlignment="Left">
+                                </StackPanel>
+                            </ScrollViewer>
+
+                            <Border x:Name="TeamScrollBorder" Background="#266986" Grid.Column="1" Margin="2 0 2 0" VerticalAlignment="Top" Width="9"/>
+                        </Grid>
+                    </Border>
+
+                </StackPanel>
+                <!--#endregion-->
+                
+                <!--#region Tags-->
+                <StackPanel Height="510" Width="256" Margin="2.5 5 10 5">
+                    <elements:TextInput Placeholder="Filter Type" TextForeground="#266986"
+                                        ImageSource="../Resources/search.png" Margin="0 0 0 3"
+                                        Height="32" Width="128" FontSize="10" Cursor="IBeam"
+                                        TextBackground="#FFF" BorderColor="#FAFAFA" InputTextChanged="Tags_SearchChanged"/>
+
+                    <Border Height="475" Background="#FFF" BorderBrush="#FAFAFA" BorderThickness="1">
+                        <Grid Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="11"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ScrollViewer x:Name="TagScroller" Height="469" VerticalScrollBarVisibility="Hidden"
+                                  ScrollChanged="TagScroller_ScrollChanged" VerticalAlignment="Top">
+                                <StackPanel x:Name="TagsList">
+                                </StackPanel>
+                            </ScrollViewer>
+
+                            <Border x:Name="TagScrollBorder" Background="#266986" Grid.Column="1" Margin="2 0 2 0" VerticalAlignment="Top" Width="9"/>
+                        </Grid>
+                    </Border>
+
+                </StackPanel>
+                <!--#endregion-->
+                
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+
+    </Grid>
+</UserControl>

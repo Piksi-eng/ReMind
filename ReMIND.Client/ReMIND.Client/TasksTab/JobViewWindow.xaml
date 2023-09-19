@@ -1,0 +1,110 @@
+﻿<Window x:Class="ReMIND.Client.TasksTab.JobViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReMIND.Client.TasksTab"
+        xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+        mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" Background="#0000"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
+        Title="Job View" Height="720" Width="1280" Loaded="JobViewWindow_Loaded"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        Foreground="#266986" FontFamily="../Fonts/#Lexend Deca" FontSize="9" FontWeight="Medium">
+   
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Border x:Name="WindowBorder"
+                Background="#FFF" BorderBrush="#FAFAFA" BorderThickness="1"
+                Grid.Row="1" Grid.Column="1" Padding="10 15" RenderTransformOrigin="0.5,0.5">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="24*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--#region Name & Finished-->
+                    <TextBlock Text="{Binding Path=AttachedJob.Name, FallbackValue='Binding Failure'}"
+                               FontSize="14"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBlock Text="FINISHED"
+                                   FontSize="10"
+                                   VerticalAlignment="Center"/>
+                        <elements:CleanCheckbox x:Name="FinishedCB" Margin="2" CheckedChanged="FinishedCheck_CheckedChanged"/>
+                    </StackPanel>
+                    <!--#endregion-->
+
+                    <!--#region Date, Contact-->
+                    <StackPanel Orientation="Horizontal"
+                            Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Image Source="Icons/Calendar.png"
+                           Margin="0 5 5 5" Opacity="0.85"/>
+                        <TextBlock Text="{Binding Path=AttachedJob.Deadline, StringFormat=dd.MM.yyyy, FallbackValue='binding failure'}"
+                               Foreground="#D9266986"
+                               VerticalAlignment="Center"/>
+
+                        <Image Source="Icons/Contact.png"
+                           Margin="5 5 0 5"/>
+                        <TextBlock Text="{Binding Path=AttachedJob.Contact, FallbackValue='no contact information'}"
+                               Foreground="#D9266986"
+                               VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <!--#endregion-->
+
+                    <!--#region Tag-->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                        <Border Background="{Binding Path=AttachedJob.JobTag.Color, FallbackValue='#D0480E'}"
+                            Width="2" Margin="1"/>
+                        <TextBlock Text="{Binding Path=AttachedJob.JobTag.Name,FallbackValue='DEFAULT'}"
+                               Foreground="#D9266986"
+                               VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                    <!--#endregion-->
+
+                    <!--#region Description-->
+                    <TextBlock Text="{Binding Path=AttachedJob.Description, FallbackValue='lorem ipsum...'}"
+                           Grid.Row="2" Margin="0 0 0 10" TextWrapping="Wrap"
+                           FontFamily="../Fonts/rbt/#Roboto"/>
+                    <!--#endregion-->
+
+                    <!--#region Buttons-->
+                    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Grid.Row="4">
+                        <elements:CleanButton x:Name="SaveButton" DisplayText="SAVE" ButtonClicked="SaveButton_ButtonClicked"
+                                          FontSize="12" Visibility="Collapsed"
+                                          Width="96" Margin="0 0 3 0"/>
+                        <elements:CleanButton x:Name="CloseButton" DisplayText="CLOSE" ButtonClicked="CloseButton_ButtonClicked"
+                                          FontSize="12"
+                                          Width="96"/>
+                    </StackPanel>
+                    <!--#endregion-->
+
+                </Grid>
+
+            <Border.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1"/>
+            </Border.RenderTransform>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="4" Opacity="0.25" BlurRadius="4" Direction="270"/>
+            </Border.Effect>
+        </Border>
+
+    </Grid>
+</Window>

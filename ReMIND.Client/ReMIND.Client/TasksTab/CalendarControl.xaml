@@ -1,0 +1,199 @@
+﻿<UserControl x:Class="ReMIND.Client.TasksTab.CalendarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.TasksTab"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d" Foreground="#266986" FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium"
+             d:DesignHeight="625" d:DesignWidth="799" RenderOptions.BitmapScalingMode="HighQuality"
+             RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="CalendarMonthButton" TargetType="Button">
+            <Grid Cursor="Hand">
+                <Rectangle x:Name="ButtonRect" Fill="Transparent"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ButtonRect" Property="Fill" Value="#80e5e5e5"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"  />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="FilterResetButton" TargetType="Button">
+            <Grid Cursor="Hand" Background="#FFF">
+                <Border x:Name="BtnBorder" BorderBrush="#F0F0F0" BorderThickness="1"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image x:Name="BtnImage" Source="../Resources/X.png" Height="14" Width="14" Margin="8"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BtnImage" Property="Source" Value="../Resources/X-Hover.png"/>
+                    <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#266986"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="BtnImage" Property="Source" Value="../Resources/X-Click.png"/>
+                    <Setter TargetName="BtnBorder" Property="Background" Value="#266986"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="525"/>
+        </Grid.RowDefinitions>
+
+        <!--#region Header-->
+        <StackPanel Grid.RowSpan="2" Panel.ZIndex="2">
+            
+            <!--Month label-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="64">
+                <TextBlock Text="September 2022" FontFamily="../Fonts/rbt/#Roboto" VerticalAlignment="Center"
+                    FontSize="48" Name="MonthLabel">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Opacity="0.25" ShadowDepth="1.5" Direction="270" BlurRadius="0"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
+            
+            <Grid Width="460" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="114"/>
+                    <ColumnDefinition Width="346"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="524"/> <!--god forbid, ne smanjuj-->
+                </Grid.RowDefinitions>
+
+                <!--#region Search thingies-->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.RowSpan="2" x:Name="SearchDropdownsList"  Grid.Column="1">
+                    <elements:SearchDropdown x:Name="TeamSelector" Margin="3 0 2 0" Width="109"
+                                             Placeholder="Team" MaxHeight="525" SelectedItemChanged="TeamSelector_SelectedItemChanged">
+                        <elements:SearchDropdown.Effect>
+                            <DropShadowEffect Opacity="0.25" Direction="270" BlurRadius="1" ShadowDepth="1"/>
+                        </elements:SearchDropdown.Effect>
+                    </elements:SearchDropdown>
+                    
+                    <elements:SearchDropdown x:Name="EmployeeSelector" Margin="3 0 2 0" Width="109"
+                                             Placeholder="Employee" MaxHeight="525" SelectedItemChanged="EmployeeSelector_SelectedItemChanged">
+                        <elements:SearchDropdown.Effect>
+                            <DropShadowEffect Opacity="0.25" Direction="270" BlurRadius="1" ShadowDepth="1"/>
+                        </elements:SearchDropdown.Effect>
+                    </elements:SearchDropdown>
+                    
+                    <elements:SearchDropdown x:Name="TagSelector" Margin="3 0 5 0" Width="109"
+                                             Placeholder="Type" MaxHeight="525" SelectedItemChanged="TagSelector_SelectedItemChanged">
+                        <elements:SearchDropdown.Effect>
+                            <DropShadowEffect Opacity="0.25" Direction="270" BlurRadius="1" ShadowDepth="1"/>
+                        </elements:SearchDropdown.Effect>
+                    </elements:SearchDropdown>
+                </StackPanel>
+                <!--#endregion-->
+
+                <!--#region Buttons-->
+                <StackPanel Orientation="Horizontal">
+                    
+                    <Button Template="{StaticResource CalendarMonthButton}"
+                            Click="PrevMonth_Click" Margin="3 0 6.5 0">
+                        <Image Source="Icons/PrevMonth.png" Width="32" Height="33"/>
+                        <Button.Effect>
+                            <DropShadowEffect Opacity="0.25" ShadowDepth="1.5" Direction="270" BlurRadius="1"/>
+                        </Button.Effect>
+                    </Button>
+                    
+                    <Button Template="{StaticResource CalendarMonthButton}"
+                            Click="NextMonth_Click" Margin="0 0 6.5 0">
+                        <Image Source="Icons/NextMonth.png" Width="32" Height="33"/>
+                        <Button.Effect>
+                            <DropShadowEffect Opacity="0.25" ShadowDepth="1" Direction="270" BlurRadius="1"/>
+                        </Button.Effect>
+                    </Button>
+
+                    <Button Template="{StaticResource FilterResetButton}" VerticalAlignment="Center"
+                            Click="ClearFilters_Click" Margin="0 0 2 0" SnapsToDevicePixels="True">
+                        <Button.Effect>
+                            <DropShadowEffect Opacity="0.25" ShadowDepth="1" Direction="270" BlurRadius="1"/>
+                        </Button.Effect>
+                    </Button>
+
+                </StackPanel>
+                <!--#endregion-->
+                
+            </Grid>
+            
+        </StackPanel>
+        <!--#endregion-->
+
+        <!--#region this is my fake drop shadow :3-->
+        <Border BorderBrush="Black" BorderThickness="1 0 1 4" Opacity="0.25"
+                Grid.Row="1" Margin="0 4 0 0">
+            <Border.Effect>
+                <BlurEffect Radius="4"/>
+            </Border.Effect>
+        </Border>
+        <!--#endregion-->
+        
+        <!--#region Calendar-->
+        <Border BorderBrush="#C0ECECEC" BorderThickness="0.5" Background="Transparent"
+                Margin="0 0 0 4" Grid.Row="1" Height="521" Width="799" Panel.ZIndex="1">
+
+            <Grid x:Name="CalendarGrid" Background="#00FFFFFF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                
+                <!--#region Weekdays-->
+                <local:WeekDay DisplayText="MONDAY" Grid.Column="0"/>
+                <local:WeekDay DisplayText="TUESDAY" Grid.Column="1"/>
+                <local:WeekDay DisplayText="WEDNESDAY" Grid.Column="2"/>
+                <local:WeekDay DisplayText="THURSDAY" Grid.Column="3"/>
+                <local:WeekDay DisplayText="FRIDAY" Grid.Column="4"/>
+                <local:WeekDay DisplayText="SATURDAY" Grid.Column="5"/>
+                <local:WeekDay DisplayText="SUNDAY" Grid.Column="6"/>
+                <!--#endregion-->
+                
+                <!-- Calendar cells generated by code here -->
+
+            </Grid>
+        </Border>
+        <!--#endregion-->
+
+    </Grid>
+    
+</UserControl>

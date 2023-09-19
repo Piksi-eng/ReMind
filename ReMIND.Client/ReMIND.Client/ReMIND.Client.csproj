@@ -1,0 +1,179 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Icon\ReMIND_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AnalyticsTab\Icons\eyeCrossed.png" />
+    <None Remove="AnalyticsTab\Icons\eyeVisible.png" />
+    <None Remove="AnalyticsTab\Icons\LeftArrow.png" />
+    <None Remove="AnalyticsTab\Icons\RightArrow.png" />
+    <None Remove="ArchiveTab\Icons\SortAscending.png" />
+    <None Remove="ArchiveTab\Icons\SortDescending.png" />
+    <None Remove="ArchiveTab\Icons\SortUndefined.png" />
+    <None Remove="Elements\Icons\Calendar.png" />
+    <None Remove="Elements\Icons\DropdownArrow.png" />
+    <None Remove="Elements\Icons\LeftArrow.png" />
+    <None Remove="Elements\Icons\RightArrow.png" />
+    <None Remove="Fonts\Gotham Light Regular.otf" />
+    <None Remove="Fonts\Lexend Deca.ttf" />
+    <None Remove="Fonts\rbt\Roboto-Black.ttf" />
+    <None Remove="Fonts\rbt\Roboto-BlackItalic.ttf" />
+    <None Remove="Fonts\rbt\Roboto-Bold.ttf" />
+    <None Remove="Fonts\rbt\Roboto-BoldItalic.ttf" />
+    <None Remove="Fonts\rbt\Roboto-Italic.ttf" />
+    <None Remove="Fonts\rbt\Roboto-Light.ttf" />
+    <None Remove="Fonts\rbt\Roboto-LightItalic.ttf" />
+    <None Remove="Fonts\rbt\Roboto-Medium.ttf" />
+    <None Remove="Fonts\rbt\Roboto-MediumItalic.ttf" />
+    <None Remove="Fonts\rbt\Roboto-Regular.ttf" />
+    <None Remove="Fonts\rbt\Roboto-Thin.ttf" />
+    <None Remove="Fonts\rbt\Roboto-ThinItalic.ttf" />
+    <None Remove="Fonts\Roboto-Regular.ttf" />
+    <None Remove="Loading\fan.gif" />
+    <None Remove="Login\LoginBackground.jpg" />
+    <None Remove="Management\Icons\Account.png" />
+    <None Remove="Management\Icons\Employed.png" />
+    <None Remove="Management\Icons\Team.png" />
+    <None Remove="Management\Icons\TeamView.png" />
+    <None Remove="Management\Icons\Unemployed.png" />
+    <None Remove="Resources\archive-white.png" />
+    <None Remove="Resources\archive.png" />
+    <None Remove="Resources\check-white.png" />
+    <None Remove="Resources\check.png" />
+    <None Remove="Resources\Close.png" />
+    <None Remove="Resources\delete-white.png" />
+    <None Remove="Resources\delete.png" />
+    <None Remove="Resources\edit-white.png" />
+    <None Remove="Resources\edit.png" />
+    <None Remove="Resources\export.png" />
+    <None Remove="Resources\fanBlue.png" />
+    <None Remove="Resources\fanWhite.png" />
+    <None Remove="Resources\flag.png" />
+    <None Remove="Resources\Icon\ReMIND_icon.ico" />
+    <None Remove="Resources\lock.png" />
+    <None Remove="Resources\logoTransparent.png" />
+    <None Remove="Resources\Maximize.png" />
+    <None Remove="Resources\Minimize.png" />
+    <None Remove="Resources\person.png" />
+    <None Remove="Resources\Plus-Hover.png" />
+    <None Remove="Resources\Plus.png" />
+    <None Remove="Resources\search.png" />
+    <None Remove="Resources\TasksIcon.png" />
+    <None Remove="Resources\X-Click.png" />
+    <None Remove="Resources\X-Hover.png" />
+    <None Remove="Resources\X.png" />
+    <None Remove="TasksTab\Icons\Calendar.png" />
+    <None Remove="TasksTab\Icons\Contact.png" />
+    <None Remove="TasksTab\Icons\NextMonth.png" />
+    <None Remove="TasksTab\Icons\PrevMonth.png" />
+    <None Remove="TitleBar\Icons\Analytics.png" />
+    <None Remove="TitleBar\Icons\Archive.png" />
+    <None Remove="TitleBar\Icons\logout.png" />
+    <None Remove="TitleBar\Icons\Manage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Icon\ReMIND_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Icon\ReMIND_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.240" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AnalyticsTab\Icons\eyeCrossed.png" />
+    <Resource Include="AnalyticsTab\Icons\eyeVisible.png" />
+    <Resource Include="AnalyticsTab\Icons\LeftArrow.png" />
+    <Resource Include="AnalyticsTab\Icons\RightArrow.png" />
+    <Resource Include="ArchiveTab\Icons\SortAscending.png" />
+    <Resource Include="ArchiveTab\Icons\SortDescending.png" />
+    <Resource Include="ArchiveTab\Icons\SortUndefined.png" />
+    <Resource Include="Elements\Icons\Calendar.png" />
+    <Resource Include="Elements\Icons\DropdownArrow.png" />
+    <Resource Include="Elements\Icons\LeftArrow.png" />
+    <Resource Include="Elements\Icons\RightArrow.png" />
+    <Resource Include="Fonts\Gotham Light Regular.otf" />
+    <Resource Include="Fonts\Lexend Deca.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-Black.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-BlackItalic.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-Bold.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-BoldItalic.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-Italic.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-Light.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-LightItalic.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-Medium.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-MediumItalic.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-Regular.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-Thin.ttf" />
+    <Resource Include="Fonts\rbt\Roboto-ThinItalic.ttf" />
+    <Resource Include="Loading\fan.gif" />
+    <Resource Include="Management\Icons\Account.png" />
+    <Resource Include="Management\Icons\Employed.png" />
+    <Resource Include="Management\Icons\Team.png" />
+    <Resource Include="Management\Icons\TeamView.png" />
+    <Resource Include="Management\Icons\Unemployed.png" />
+    <Resource Include="Resources\archive-white.png" />
+    <Resource Include="Resources\archive.png" />
+    <Resource Include="Resources\Background.jpg" />
+    <Resource Include="Resources\check-white.png" />
+    <Resource Include="Resources\check.png" />
+    <Resource Include="Resources\Close.png" />
+    <Resource Include="Resources\delete-white.png" />
+    <Resource Include="Resources\delete.png" />
+    <Resource Include="Resources\edit-white.png" />
+    <Resource Include="Resources\edit.png" />
+    <Resource Include="Resources\export.png" />
+    <Resource Include="Resources\fanBlue.png" />
+    <Resource Include="Resources\fanWhite.png" />
+    <Resource Include="Resources\flag.png" />
+    <Resource Include="Resources\lock.png" />
+    <Resource Include="Resources\logoTransparent.png" />
+    <Resource Include="Resources\Maximize.png" />
+    <Resource Include="Resources\Minimize.png" />
+    <Resource Include="Resources\person.png" />
+    <Resource Include="Resources\Plus-Hover.png" />
+    <Resource Include="Resources\Plus.png" />
+    <Resource Include="Resources\search.png" />
+    <Resource Include="Resources\X-Click.png" />
+    <Resource Include="Resources\X-Hover.png" />
+    <Resource Include="Resources\X.png" />
+    <Resource Include="TasksTab\Icons\Calendar.png" />
+    <Resource Include="TasksTab\Icons\Contact.png" />
+    <Resource Include="TasksTab\Icons\NextMonth.png" />
+    <Resource Include="TasksTab\Icons\PrevMonth.png" />
+    <Resource Include="TitleBar\Icons\Analytics.png" />
+    <Resource Include="TitleBar\Icons\Archive.png" />
+    <Resource Include="TitleBar\Icons\logout.png" />
+    <Resource Include="TitleBar\Icons\Manage.png" />
+    <Resource Include="TitleBar\Icons\Tasks.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,87 @@
+﻿<Window x:Class="ReMIND.Client.TasksTab.GroupViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReMIND.Client.TasksTab"
+        xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+        mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" Background="#0000"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
+        Title="Job View" Height="720" Width="1280" Loaded="JobViewWindow_Loaded"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        Foreground="#266986" FontFamily="../Fonts/#Lexend Deca" FontSize="9" FontWeight="Medium">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Border x:Name="WindowBorder"
+                Background="#FFF" BorderBrush="#FAFAFA" BorderThickness="1"
+                Grid.Row="1" Grid.Column="1" Padding="10 15" RenderTransformOrigin="0.5,0.5">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="24*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+
+                <!--#region Name & Remove-->
+                <TextBlock Text="{Binding Path=AttachedGroup.Name, FallbackValue='Binding Failure'}"
+                               FontSize="14"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                <elements:CleanButton DisplayText="REQUEST REMOVAL" Visibility="Collapsed"
+                                      Width="106" ButtonForeground="#CCD37979" x:Name="ReqRemovalButton"
+                                      HorizontalAlignment="Right" ButtonClicked="Removal_ButtonClicked"/>
+                <!--nikola otkrij remove button kada se implementira-->
+                <!--#endregion-->
+
+                <!--#region Status-->
+                <StackPanel x:Name="StatusStackPanel" Orientation="Horizontal"
+                            Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                </StackPanel>
+
+                <TextBlock Text="STATUS: 0/0" x:Name="StatusTextBlock"
+                               Foreground="#D9266986"
+                               VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1">
+                </TextBlock>
+                <!--#endregion-->
+
+                <!--#region Description-->
+                <TextBlock Text="{Binding Path=AttachedGroup.Description, FallbackValue='lorem ipsum...'}"
+                           Grid.Row="2" Margin="0 0 0 10" TextWrapping="Wrap"
+                           FontFamily="../Fonts/rbt/#Roboto"/>
+                <!--#endregion-->
+
+                <!--#region Buttons-->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Grid.Row="4">
+                    <elements:CleanButton x:Name="CloseButton" DisplayText="CLOSE" ButtonClicked="CloseButton_ButtonClicked"
+                                          FontSize="12"
+                                          Width="96"/>
+                </StackPanel>
+                <!--#endregion-->
+
+            </Grid>
+
+            <Border.RenderTransform>
+                <ScaleTransform ScaleX="0" ScaleY="0"/>
+            </Border.RenderTransform>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="4" Opacity="0.25" BlurRadius="4" Direction="270"/>
+            </Border.Effect>
+        </Border>
+
+    </Grid>
+</Window>

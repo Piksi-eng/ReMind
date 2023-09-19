@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="ReMIND.Client.Management.AddEditTeam"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Management"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d"  Foreground="#266986"
+             FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium"
+             d:DesignHeight="519" d:DesignWidth="340" Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="TeamsButton" TargetType="Button">
+            <Border Cursor="Hand">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Grid Height="519" Width="340" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="98*"/>
+            <RowDefinition Height="52*"/>
+            <RowDefinition Height="52*"/>
+            <RowDefinition Height="213*"/>
+            <RowDefinition Height="40*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Margin="10" Text="TEAM OPTIONS" FontWeight="SemiBold"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
+
+        <!--#region BASIC INFORMATION-->
+        
+        <Image Grid.Row="1" HorizontalAlignment="Center" Source="Icons/Account.png"/>
+        <elements:TextInput Grid.Row="2" HorizontalAlignment="Center" TextBackground="#FFF"
+                            TextForeground="#266986" Placeholder="Team Name" Margin="2"
+                            Width="172" Height="36" ImageSource="../Resources/edit.png"
+                            BorderColor="#ECECEC" x:Name="TeamNameInput"/>
+        
+        <!--#endregion-->
+
+        <elements:DualListPicker Grid.Row="3" Margin="25 0" Grid.RowSpan="2"
+                                 LeftText="ACCOUNT LIST" RightText="MEMBERS"
+                                 x:Name="AccountDualListPicker"/>
+
+        <!--#region BUTTONS-->
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <elements:CleanButton x:Name="SaveButton" DisplayText="SAVE" ButtonClicked="SaveButton_ButtonClicked"
+                                  Grid.Column="0" Width="96" Height="32" HorizontalAlignment="Right"/>
+            <elements:CleanButton x:Name="ClearButton" DisplayText="CLEAR ALL" ButtonClicked="ClearButton_ButtonClicked"
+                                  Grid.Column="1" Width="96" Height="32"/>
+            <elements:CleanButton x:Name="DeleteButton" DisplayText="DELETE" ButtonClicked="DeleteButton_ButtonClicked"
+                                  ButtonBackground="#D0480E" ButtonForeground="#FFF"
+                                  Grid.Column="2" Width="96" Height="32" HorizontalAlignment="Left"/>
+
+        </Grid>
+        <!--#endregion-->
+        
+    </Grid>
+
+</UserControl>

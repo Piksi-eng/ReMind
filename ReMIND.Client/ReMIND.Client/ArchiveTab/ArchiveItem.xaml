@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="ReMIND.Client.ArchiveTab.ArchiveItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.ArchiveTab"
+             mc:Ignorable="d" FontFamily="../Fonts/rbt/#Roboto"
+             FontWeight="Medium" FontSize="10" Foreground="#266986"
+             d:DesignHeight="25" d:DesignWidth="1171"
+             Background="#FFF" Loaded="UserControl_Loaded">
+    
+    <Grid Height="24" Width="1171">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="32"/> <!--index-->
+            <ColumnDefinition Width="115"/> <!--Name-->
+            <ColumnDefinition Width="115"/> <!--Team-->
+            <ColumnDefinition Width="115"/> <!--Creator-->
+            <ColumnDefinition Width="115"/> <!--Group-->
+            <ColumnDefinition Width="115"/> <!--Tag-->
+            <ColumnDefinition Width="115"/> <!--Employee-->
+            <ColumnDefinition Width="115"/> <!--Finished-->
+            <ColumnDefinition Width="115"/> <!--Weight-->
+            <ColumnDefinition Width="219"/> <!--Deadline-->
+        </Grid.ColumnDefinitions>
+
+        <!--#region Index-->
+        <Border>
+            <TextBlock Text="{Binding Path=Index, Mode=TwoWay, FallbackValue=1}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="IndexTextBlock"/>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Name-->
+        <Border Grid.Column="1" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock Text="{Binding Path=ArchivedJob.Name, Mode=OneWay, FallbackValue=JobName}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="NameTextBlock" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Team-->
+        <Border Grid.Column="2" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock Text="{Binding Path=ArchivedJob.TeamName, Mode=OneWay, FallbackValue=TeamName}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="TeamTextblock" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Creator-->
+        <Border Grid.Column="3" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock Text="{Binding Path=ArchivedJob.Contact, Mode=OneWay, FallbackValue=Contact}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       ToolTip="{Binding Path=ArchivedJob.Contact, Mode=OneWay, FallbackValue=Contact}"
+                       x:Name="ContactTextBlock" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Group-->
+        <Border Grid.Column="4" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock Text="{Binding Path=ArchivedJob.JobGroupName, Mode=OneWay, FallbackValue=GroupName}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="GroupTextBlock" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Tag-->
+        <Border Grid.Column="5" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock Text="{Binding Path=ArchivedJob.JobTagName, Mode=OneWay, FallbackValue=Tag}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="TagTextBlock" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+        
+        <!--#region Employee-->
+        <Border Grid.Column="6" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock Text="{Binding Path=ArchivedJob.Person.Name, Mode=OneWay, FallbackValue=Employee}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="EmployeeTextBlock" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Finished-->
+        <Border Grid.Column="7" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock x:Name="FinishedDateTextblock"
+                       Text="{Binding Path=ArchivedJob.Finished, StringFormat='dd.MM.yyyy.', Mode=OneWay, FallbackValue=FinishedDate}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Weight-->
+        <Border  Grid.Column="8" Padding="3" BorderBrush="#ECECEC" BorderThickness="1 0 0 0">
+            <Grid>
+                <StackPanel x:Name="WeightsStackPanel" Orientation="Horizontal" VerticalAlignment="Center">
+                </StackPanel>
+                <TextBlock Text="{Binding Path=ArchivedJob.JobWeight, Mode=OneWay, FallbackValue=0}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"
+                           x:Name="WeightNumberLabel"/>
+            </Grid>
+        </Border>
+        <!--#endregion-->
+        
+        <!--#region Deadline-->
+        <Border Grid.Column="9" BorderBrush="#ECECEC" BorderThickness="1 0 0 0" Padding="2 0">
+            <TextBlock Text="{Binding Path=ArchivedJob.Deadline, StringFormat='dd.MM.yyyy.', Mode=OneWay, FallbackValue=DeadlineDate}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="DeadlineTextBlock" TextTrimming="CharacterEllipsis"/>
+        </Border>
+        <!--#endregion-->
+
+    </Grid>
+</UserControl>

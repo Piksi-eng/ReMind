@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="ReMIND.Client.TasksTab.AddEditGroup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ReMIND.Client.TasksTab"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d" Foreground="#266986" d:DesignWidth="430"
+             d:DesignHeight="435" Loaded="UserControl_Loaded">
+
+    <Border Background="#10000000" BorderBrush="#E5E5E5" Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--#region Description-->
+            <TextBox Grid.Row="6" Grid.RowSpan="3" Grid.ColumnSpan="3" Margin="0 10 0 0"
+                         CaretBrush="#266986" Foreground="#266986" FontFamily="../Fonts/#Lexend Deca"
+                         BorderBrush="#ECECEC" BorderThickness="1" Name="DescriptionBox" TextWrapping="Wrap">
+                <TextBox.Effect>
+                    <DropShadowEffect Opacity="0.25" ShadowDepth="1" BlurRadius="2" Direction="270"/>
+                </TextBox.Effect>
+            </TextBox>
+            <!--#endregion-->
+
+            <!--#region Buttons-->
+            <!--<elements:CleanButton Grid.Row="9" Grid.Column="0" DisplayText="ARCHIVE"
+                                  Height="32" Width="96" Margin="0 8 0 0" ButtonClicked="ArchiveButton_ButtonClicked"
+                                  HorizontalAlignment="Left" x:Name="ArchiveButton"/>-->
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="9" Grid.Column="2"
+                    Margin="0 8 0 0">
+
+                <elements:CleanButton DisplayText="SAVE" x:Name="SaveButton"
+                                      Height="32" Width="96" ButtonClicked="SaveButton_ButtonClicked"/>
+                <elements:CleanButton DisplayText="CANCEL" Margin="4 0 0 0" ButtonClicked="CancelButton_ButtonClicked"
+                                      Height="32" Width="96" x:Name="CancelButton"/>
+
+            </StackPanel>
+            <!--#endregion-->
+
+            <!--#region Left Strip-->
+            <elements:TextInput Placeholder="Name" TextForeground="#266986" Height="32" x:Name="JobNameInput"
+                            BorderColor="#ECECEC" TextBackground="#FFF" FontSize="10" VerticalAlignment="Top"/>
+
+            <elements:SearchDropdown x:Name="TeamsDropdown" Placeholder="Team" Grid.Row="1"
+                                 Grid.RowSpan="5"/>
+
+            <!--#endregion-->
+
+        </Grid>
+
+        <Border.Effect>
+            <DropShadowEffect Opacity="0.25" ShadowDepth="4" BlurRadius="4" Direction="270"/>
+        </Border.Effect>
+    </Border>
+</UserControl>

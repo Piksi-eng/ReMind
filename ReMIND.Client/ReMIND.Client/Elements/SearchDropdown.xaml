@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="ReMIND.Client.Elements.SearchDropdown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Elements"
+             LostFocus="UserControl_LostFocus" LostKeyboardFocus="UserControl_LostFocus"
+             mc:Ignorable="d" KeyDown="Control_KeyDown" Foreground="#266986"
+             FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium" FontSize="8"
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="212" d:DesignWidth="110" IsEnabledChanged="UserControl_IsEnabledChanged">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ArrowBtn" TargetType="ToggleButton">
+            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="True">
+                <Grid x:Name="BtnGrid" Background="{TemplateBinding Background}">
+                    <Image Source="Icons/DropDownArrow.png" Height="27" Width="31"/>
+                </Grid>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BtnGrid" Property="Background" Value="#00266986"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="DefaultButton" TargetType="Button">
+            <Grid x:Name="ButtonGrid" Background="Transparent" Margin="2">
+                <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ButtonGrid" Property="Background" Value="#11FFFFFF"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="28"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!--#region Input-->
+        <Border BorderThickness="1 1 0 1" BorderBrush="#FAFAFA" Background="#FFF" Cursor="IBeam"
+                GotFocus="Border_GotFocus" GotKeyboardFocus="Border_GotFocus" SnapsToDevicePixels="True"
+                PreviewMouseDown="Border_PreviewMouseDown">
+            <StackPanel Orientation="Horizontal" Height="30" HorizontalAlignment="Left">
+                <TextBlock x:Name="PlaceholderText" Text="{Binding Path=Placeholder}" Opacity="0.5"
+                           VerticalAlignment="Center" Margin="5 0 0 0" FontSize="10"/>
+                <TextBox x:Name="InputText" BorderThickness="0" VerticalAlignment="Center" Foreground="#266986"
+                         FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium" FontSize="10" CaretBrush="#266986"
+                         TextChanged="InputText_TextChanged" LostFocus="InputText_LostFocus" Margin="5 0 0 0"
+                         Background="#0000" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Arrow Button-->
+        <Border Background="#FFF" BorderThickness="1" BorderBrush="#FAFAFA" HorizontalAlignment="Right"
+                Grid.Column="1" Cursor="Hand" SnapsToDevicePixels="True" x:Name="ButtonBorder">
+            <ToggleButton Template="{StaticResource ArrowBtn}" x:Name="DropdownButton" Background="Transparent"
+                          BorderBrush="Transparent" BorderThickness="0"
+                          Width="26" Height="30" HorizontalAlignment="Right"
+                          Checked="DropdownButton_Checked" Unchecked="DropdownButton_Unchecked">
+                <ToggleButton.RenderTransform>
+                    <RotateTransform x:Name="ButtonRotate" Angle="0" CenterX="13" CenterY="15"/>
+                </ToggleButton.RenderTransform>
+            </ToggleButton>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region List-->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Background="#266986" x:Name="ListPanel"
+                    VerticalAlignment="Top">
+            
+            <Button Content="Reset selection" Margin="5 2 5 0" Click="Placeholder_Click" x:Name="resetButton"
+                    Cursor="Hand" Template="{StaticResource DefaultButton}" Foreground="#FFF"/>
+            <Border Height="1" BorderBrush="#FFF" BorderThickness="0.5" Margin="5" x:Name="resetBorder"/>
+
+            <Grid Margin="5 0 5 5" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="6"/>
+                </Grid.ColumnDefinitions>
+                    
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
+                              x:Name="Scroller" ScrollChanged="Scroller_ScrollChanged" MaxHeight="180">
+
+                    <StackPanel x:Name="ItemsContainer" MaxHeight="200">
+                    </StackPanel>
+
+                </ScrollViewer>
+                    
+                <Border x:Name="ScrollBorder" Width="3" Margin="2 0 1 0" Grid.Column="1"
+                        Background="#FFF" VerticalAlignment="Top"/>
+            </Grid>
+            
+            <StackPanel.RenderTransform>
+                <ScaleTransform x:Name="ListScale" ScaleY="0" CenterY="0"/>
+            </StackPanel.RenderTransform>
+        </StackPanel>
+        <!--#endregion-->
+        
+    </Grid>
+    <UserControl.Effect>
+        <DropShadowEffect Opacity="0.25" ShadowDepth="1" BlurRadius="2" Direction="270"/>
+    </UserControl.Effect>
+</UserControl>

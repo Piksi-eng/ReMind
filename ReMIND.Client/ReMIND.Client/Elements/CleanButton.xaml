@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="ReMIND.Client.Elements.CleanButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d" Cursor="Hand" SnapsToDevicePixels="True">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+            <Border x:Name="BtnBorder" BorderThickness="1" SnapsToDevicePixels="True"
+                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" Opacity="0.75"
+                           FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium" x:Name="BtnText"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BtnText" Property="Opacity" Value="1"/>
+                    <Setter TargetName="BtnBorder" Property="BorderBrush" Value="{Binding Path=ButtonForeground, Mode=OneWay, FallbackValue=#ECECEC}"/>
+                    <Setter TargetName="BtnBorder" Property="BorderThickness" Value="2"/>
+                    <Setter TargetName="BtnText" Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="BtnText" Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Button Template="{StaticResource ButtonTemplate}" Click="Button_Click" BorderBrush="#ECECEC"
+            Content="{Binding Path=DisplayText, Mode=TwoWay, FallbackValue=BUTTON}"
+            Background="{Binding Path=ButtonBackground,Mode=TwoWay,FallbackValue=#FFF}"
+            Foreground="{Binding Path=ButtonForeground, Mode=TwoWay, FallbackValue=#266986}">
+    </Button>
+
+    <UserControl.Effect>
+        <DropShadowEffect Opacity="0.25" BlurRadius="2" ShadowDepth="1" Direction="270"/>
+    </UserControl.Effect>
+    
+</UserControl>

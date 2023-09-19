@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="ReMIND.Client.Login.LoginPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Login"
+             mc:Ignorable="d" FontFamily="../Fonts/#Lexend Deca"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    
+    <Grid x:Name="LoginPageGrid" Grid.Row="1" Grid.ColumnSpan="2">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="42*" MinWidth="420"/>
+            <ColumnDefinition Width="43*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="44*" MinHeight="430"/>
+            <RowDefinition Height="14*"/>
+        </Grid.RowDefinitions>
+
+        <!--login form-->
+        <Viewbox Grid.Column="1" Grid.Row="1" x:Name="LoginViewbox">
+            <local:LoginForm x:Name="loginForm" OnLoginCompleted="LoginForm_OnLoginAction" OnLoginStarted="LoginForm_OnLoginStarted"/>
+        </Viewbox>
+
+        <!--logo on the bottom-->
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition  MinHeight="70"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Column="1">
+                <Image Source="../Resources/logoTransparent.png"/>
+            </Viewbox>
+        </Grid>
+
+    </Grid>
+</UserControl>

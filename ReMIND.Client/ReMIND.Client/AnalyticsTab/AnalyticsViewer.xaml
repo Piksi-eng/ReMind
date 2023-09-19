@@ -1,0 +1,201 @@
+﻿<UserControl x:Class="ReMIND.Client.AnalyticsTab.AnalyticsViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.AnalyticsTab"
+             xmlns:tools="clr-namespace:ReMIND.Client.AnalyticsTab.Tools"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements" FontSize="10"
+             mc:Ignorable="d" Foreground="#FFF" FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium"
+             RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
+             d:DesignHeight="625" d:DesignWidth="1188" Background="Transparent"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="PeriodButton" TargetType="RadioButton">
+            <Border Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" Background="{TemplateBinding Background}"
+                    BorderBrush="#FAFAFA" BorderThickness="1" Cursor="Hand" x:Name="ButtonBorder">
+                <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                           FontSize="12" FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Foreground="#80266986" x:Name="ButtonText"/>
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.3" ShadowDepth="1" Direction="270" BlurRadius="2"/>
+                </Border.Effect>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="ButtonText" Property="Foreground" Value="#266986"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="EntityVisibleButton" TargetType="ToggleButton">
+            <Border Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" Background="{TemplateBinding Background}"
+                    BorderBrush="#FAFAFA" BorderThickness="1" Cursor="Hand" x:Name="ButtonBorder">
+                <Grid HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="Icons/eyeCrossed.png" Margin="0 4 4 4" x:Name="eyeImg" Opacity="0.5"/>
+                    <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                               FontSize="12" FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium" Foreground="#80266986"
+                               HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" x:Name="ButtonText"/>
+                </Grid>
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.3" ShadowDepth="1" Direction="270" BlurRadius="2"/>
+                </Border.Effect>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="ButtonText" Property="Foreground" Value="#266986"/>
+                    <Setter TargetName="eyeImg" Property="Source" Value="Icons/eyeVisible.png"/>
+                    <Setter TargetName="eyeImg" Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ExportButton" TargetType="Button">
+            <Border Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"
+                    Background="#FFF" BorderBrush="#FAFAFA" BorderThickness="1"
+                    ToolTip="Export Graph" Cursor="Hand">
+                <Image x:Name="DownloadImg" Source="../Resources/export.png" Width="20" Height="20"/>
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="1" Opacity="0.25" BlurRadius="2" Direction="270"/>
+                </Border.Effect>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter TargetName="DownloadImg" Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>    
+    
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="525"/>
+        </Grid.RowDefinitions>
+
+        <!--#region Header(Filters)-->
+        <StackPanel Panel.ZIndex="2" Grid.RowSpan="2">
+
+            <!--#region Month label-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="64">
+                <TextBlock Text="Analytics" FontFamily="../Fonts/rbt/#Roboto" VerticalAlignment="Center"
+                    FontSize="48" Name="MonthLabel" Foreground="#266986">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Opacity="0.25" ShadowDepth="1.5" Direction="270" BlurRadius="0"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
+            <!--#endregion-->
+
+            <Grid VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="524"/>
+                    <!--god forbid, ne smanjuj-->
+                </Grid.RowDefinitions>
+
+                <!--#region Filters-->
+                <StackPanel x:Name="FiltersStackPanel"  Grid.RowSpan="2"
+                            Orientation="Horizontal" VerticalAlignment="Top">
+                    <elements:CleanButton Height="32" Width="32" DisplayText="X" FontSize="18" ButtonClicked="CleanButton_ButtonClicked" VerticalAlignment="Top"/>
+                    <elements:CleanDatePicker Height="32" Width="115" Margin="3 0 0 0" DisplayText="From" x:Name="FromDatePicker"
+                                              SelectedDateChanged="FromDate_SelectedDateChanged" VerticalAlignment="Top"/>
+                    <elements:CleanDatePicker Height="32" Width="115" Margin="3 0 0 0" DisplayText="To" x:Name="ToDatePicker"
+                                              SelectedDateChanged="ToDate_SelectedDateChanged" VerticalAlignment="Top"/>
+                    <RadioButton Template="{StaticResource ResourceKey=PeriodButton}" Margin="3 0 0 0" x:Name="WeekPeriodButton"
+                                 Content="Week" Height="32" Width="96" VerticalAlignment="Top" GroupName="Period" Checked="Week_Checked"/>
+                    <RadioButton Template="{StaticResource ResourceKey=PeriodButton}" Margin="3 0 0 0" x:Name="MonthPeriodButton"
+                                 Content="Month" Height="32" Width="96" VerticalAlignment="Top" GroupName="Period" Checked="Month_Checked"/>
+                    <RadioButton Template="{StaticResource ResourceKey=PeriodButton}" Margin="3 0 0 0" x:Name="Month3PeriodButton"
+                                 Content="3 Months" Height="32" Width="96" VerticalAlignment="Top" GroupName="Period" Checked="Month3_Checked"/>
+                    <RadioButton Template="{StaticResource ResourceKey=PeriodButton}" Margin="3 0 0 0" x:Name="Month6PeriodButton"
+                                 Content="6 Months" Height="32" Width="96" VerticalAlignment="Top" GroupName="Period" Checked="Month6_Checked"/>
+                    <RadioButton Template="{StaticResource ResourceKey=PeriodButton}" Margin="3 0 0 0" x:Name="YearPeriodButton"
+                                 Content="Year" Height="32" Width="96" VerticalAlignment="Top" GroupName="Period" Checked="Year_Checked"/>
+
+                    <elements:SearchDropdown Width="112" Margin="3 0 0 0" Placeholder="Type"
+                                             SelectedItemChanged="TagDropdown_SelectedItemChanged" x:Name="TagDropdown"/>
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <ToggleButton Template="{StaticResource EntityVisibleButton}" Background="#FFF" x:Name="TeamsToggle"
+                                  Checked="TeamsToggle_Checked" Unchecked="TeamsToggle_Unchecked"
+                                  Content="Teams" Height="32" Width="112" VerticalAlignment="Top" Margin="3 0 0 0"/>
+                    <ToggleButton Template="{StaticResource EntityVisibleButton}" Background="#FFF" x:Name="EmployeesToggle"
+                                  Checked="EmployeesToggle_Checked" Unchecked="EmployeesToggle_Unchecked"
+                                  Content="Employees" Height="32" Width="112" VerticalAlignment="Top" Margin="3 0 0 0"/>
+
+                    <Button x:Name="ExportButton" Margin="3 0 0 0" Height="32" Width="32" VerticalAlignment="Top"
+                            Template="{StaticResource ExportButton}" Click="ExportButton_Click"/>
+                </StackPanel>
+                <!--#endregion-->
+
+            </Grid>
+
+        </StackPanel>
+        <!--#endregion-->
+
+        <!--#region this is my fake drop shadow :3-->
+        <Border BorderBrush="Black" BorderThickness="1 0 1 4" Opacity="0.25"
+                Grid.Row="1" Margin="0 4 0 0">
+            <Border.Effect>
+                <BlurEffect Radius="4"/>
+            </Border.Effect>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Graph & Pickers-->
+        <Border BorderBrush="#ECECEC" BorderThickness="1" Background="#CFFF"
+                Margin="0 0 0 4" Grid.Row="1" Panel.ZIndex="1">
+            <StackPanel Orientation="Horizontal">
+                
+                <local:GraphView HorizontalAlignment="Left" Margin="50 10"
+                                 x:Name="GraphPresenter"/>
+                
+                <Grid Width="320" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <tools:GraphDualListPicker Grid.Row="0" x:Name="TeamsDualList" SelectedItemsChanged="TeamsDualList_SelectedItemsChanged"
+                                             LeftText="TEAMS LIST" RightText="SELECTED TEAMS"/>
+                    <tools:GraphDualListPicker Grid.Row="1" x:Name="AccountsDualList" SelectedItemsChanged="AccountsDualList_SelectedItemsChanged"
+                                             LeftText="ACCOUNTS LIST" RightText="SELECTED ACCOUNTS"/>
+                    
+                </Grid>
+            </StackPanel>
+        </Border>
+        <!--#endregion-->
+
+    </Grid>
+</UserControl>

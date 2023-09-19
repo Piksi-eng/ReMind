@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="ReMIND.Client.AnalyticsTab.Tools.GraphDualListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.AnalyticsTab.Tools" Loaded="DualListItem_Loaded"
+             mc:Ignorable="d" PreviewMouseDown="DualListItem_PreviewMouseDown" Cursor="Hand"
+             MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp" MouseLeave="UserControl_MouseLeave">
+
+    <Border x:Name="BackgroundBorder" Background="#FAFAFA" Margin="2 0.5">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Border Width="4" Background="#D37979" x:Name="ColorBorder" Visibility="Collapsed"/>
+            <TextBlock Text="{Binding Path=DisplayText, Mode=TwoWay, FallbackValue='Failed to load'}" HorizontalAlignment="Left"
+                       Foreground="#266986" FontSize="9" FontFamily="../Fonts/rbt/#Roboto" FontWeight="SemiBold"
+                       VerticalAlignment="Center" Margin="2 1" TextTrimming="CharacterEllipsis"
+                       x:Name="DisplayLabel"/>
+        </StackPanel>
+        <Border.RenderTransform>
+            <ScaleTransform x:Name="ItemScale"/>
+        </Border.RenderTransform>
+        <Border.RenderTransformOrigin>
+            <Point X="0.5" Y="0.5"/>
+        </Border.RenderTransformOrigin>
+    </Border>
+</UserControl>

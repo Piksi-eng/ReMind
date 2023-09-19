@@ -1,0 +1,164 @@
+﻿<UserControl x:Class="ReMIND.Client.TasksTab.ListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.TasksTab"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d" Foreground="#266986" Loaded="UserControl_Loaded"
+             d:DesignHeight="625" d:DesignWidth="342">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="AddButtonTemplate" TargetType="Button">
+            
+            <Border BorderBrush="#FAFAFA" BorderThickness="1" Width="32" Height="32"
+                    Cursor="Hand" Background="#FFF" x:Name="BtnBorder">
+                <Grid>
+                    <Image x:Name="BtnImage" Source="../Resources/Plus.png" Height="14" Width="14"/>
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="BtnImage" Property="Source" Value="../Resources/Plus-Hover.png"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.90" ScaleY="0.90"
+                                            CenterX="0" CenterY="0"  />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="BtnImage" Property="Source" Value="../Resources/Plus-Hover.png"/>
+                    <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#266986"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="TasksGroupsTemplate" TargetType="ToggleButton">
+            <Grid Background="Transparent" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <Border x:Name="tasksBorder" Background="#266986"
+                            BorderBrush="#FAFAFA" BorderThickness="1 1 0.5 1"
+                            Height="32" Width="64">
+                        <TextBlock Text="TASKS" Foreground="#FFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium"
+                                   x:Name="tasksBlock" FontSize="12"/>
+                    </Border>
+                    <Border x:Name="groupsBorder"
+                            BorderBrush="#FAFAFA" BorderThickness="0.5 1 1 1" Background="#FFF"
+                            Height="32"  Width="64">
+                        <TextBlock Text="GROUPS" Foreground="#C0266986" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   FontFamily="../Fonts/#Lexend Deca" FontWeight="Medium"
+                                   x:Name="groupsBlock" FontSize="10"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+            
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <!--deactivate tasks-->
+                    <Setter TargetName="tasksBlock" Property="Foreground" Value="#C0266986"/>
+                    <Setter TargetName="tasksBlock" Property="FontSize" Value="10"/>
+                    <Setter TargetName="tasksBorder" Property="Background" Value="#FFF"/>
+                    <!--activate groups-->
+                    <Setter TargetName="groupsBlock" Property="Foreground" Value="#FFF"/>
+                    <Setter TargetName="groupsBlock" Property="FontSize" Value="12"/>
+                    <Setter TargetName="groupsBorder" Property="Background" Value="#266986"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"  />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SwitchBtn" TargetType="ToggleButton">
+            <Grid Background="Transparent" Cursor="Hand">
+                <Border x:Name="BackgroundBorder" BorderBrush="#FAFAFA" BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="#FFF">
+                    <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" FontWeight="Medium"
+                               FontFamily="../Fonts/#Lexend Deca" Foreground="#C0266986" x:Name="ButtonText"/>
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="1" Direction="270" BlurRadius="0" Opacity="0.3"/>
+                    </Border.Effect>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="BackgroundBorder" Property="Background" Value="#266986"/>
+                    <Setter TargetName="ButtonText" Property="Foreground" Value="#FFF"/>
+                    <Setter TargetName="ButtonText" Property="FontSize" Value="11"/>
+                    <Setter Property="IsEnabled" Value="False"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ButtonText" Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="ButtonText" Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <!--todo-->
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="525"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 0 7">
+            <Button x:Name="AddButton" Template="{StaticResource AddButtonTemplate}" Click="AddButton_Click" Margin="0 0 3 0"/>
+            <ToggleButton x:Name="TasksToggleButton" Template="{StaticResource SwitchBtn}" Height="32" Width="64"
+                          HorizontalAlignment="Right" Content="TASKS"
+                          Checked="TasksToggleButton_Checked"/>
+            <ToggleButton x:Name="GroupsToggleButton" Template="{StaticResource SwitchBtn}" Height="32" Width="64"
+                          HorizontalAlignment="Right" Content="GROUPS"
+                          Checked="GroupsToggleButton_Checked"/>
+        </StackPanel>
+        
+        <!--this is my fake drop shadow :3-->
+        <Border BorderBrush="Black" BorderThickness="1 0 1 4" Opacity="0.25"
+                Grid.Row="1" Margin="0 4 0 0">
+            <Border.Effect>
+                <BlurEffect Radius="4"/>
+            </Border.Effect>
+        </Border>
+
+        <Border Grid.Row="1" Width="342" Background="#CFFF" Cursor="IBeam"
+             BorderBrush="#ECECEC" BorderThickness="1" Padding="30 5 30 15" Margin="0 0 0 4">
+            <StackPanel Width="280" Height="521">
+
+                <elements:TextInput x:Name="SearchBar" Placeholder="Search..." ImageSource="../Resources/search.png"
+                                    Height="32" BorderColor="#ECECEC" TextBackground="#FFF" TextForeground="#266986"
+                                    InputTextChanged="SearchBar_InputTextChanged"/>
+
+                <Grid Margin="0 3 0 0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="19.69*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer x:Name="Scroller" Height="458" VerticalScrollBarVisibility="Hidden"
+                                  ScrollChanged="Scroller_ScrollChanged" VerticalAlignment="Top">
+                        <StackPanel x:Name="ItemList"/>
+                    </ScrollViewer>
+
+                    <Border x:Name="ScrollBorder" Background="#266986" Grid.Column="1" Margin="2 0 2 0" VerticalAlignment="Top"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        
+    </Grid>
+</UserControl>

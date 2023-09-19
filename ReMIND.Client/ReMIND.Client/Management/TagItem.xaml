@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="ReMIND.Client.Management.TagItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Management"
+             mc:Ignorable="d" MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave" Loaded="UserControl_Loaded"
+             d:DesignHeight="45" d:DesignWidth="239">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="EditButton" TargetType="Button">
+            <Grid>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="2" ScaleY="2"
+                                            CenterX="0" CenterY="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.7" ScaleY="1.7"
+                                            CenterX="0" CenterY="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Grid Height="45" Width="239">
+        <Border Height="44" Width="238" Background="#FFF" Margin="0 0 1 1">
+            <StackPanel Orientation="Horizontal">
+                <Border Background="{Binding Path=Color}" Height="43" Width="43" Margin="1 1 5 1"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Path=Name}" Foreground="#266986" TextTrimming="CharacterEllipsis"
+                               FontFamily="../Fonts/rbt/#Roboto" FontWeight="Medium" FontSize="14"/>
+                    <TextBlock Text="{Binding Path=Color}" Foreground="#CC266986" TextTrimming="CharacterEllipsis"
+                               FontFamily="../Fonts/rbt/#Roboto" FontWeight="Medium" FontSize="9">
+                    </TextBlock>
+                    <TextBlock Text="3 Jobs" Foreground="#CC266986" x:Name="JobsTextblock"
+                               FontFamily="../Fonts/rbt/#Roboto" FontWeight="Medium" FontSize="9"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Button Template="{StaticResource EditButton}" Cursor="Hand" Visibility="Hidden"
+                HorizontalAlignment="Right" Height="16" Margin="0 0 5 0" x:Name="EditButton"
+                Click="EditButton_Click">
+            <Image Source="../Resources/edit.png"/>
+        </Button>
+
+        <Border Height="44" Width="238" Margin="1 1 0 0"
+                BorderBrush="#000" BorderThickness="0 0 1 1"
+                Opacity="0.25"/>
+    </Grid>
+
+</UserControl>

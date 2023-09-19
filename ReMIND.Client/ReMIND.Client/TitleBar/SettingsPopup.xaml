@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="ReMIND.Client.TitleBar.SettingsPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.TitleBar"
+             xmlns:elements="clr-namespace:ReMIND.Client.Elements"
+             mc:Ignorable="d" KeyDown="UserControl_KeyDown"
+             d:DesignHeight="680" d:DesignWidth="1280">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="TransparentButton" TargetType="Button">
+            <Border>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"  />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="PassChangeButton" TargetType="Button">
+            <Border x:Name="ButtonBorder" Background="#266986" BorderThickness="0" Cursor="Hand">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ButtonBorder" Property="Background" Value="#377A96"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"
+                                            CenterX="0" CenterY="0"  />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
+    <Border Width="1280" Height="680" Background="Transparent" PreviewMouseDown="Border_PreviewMouseDown">
+        <Grid>
+            <Border Background="#005478" Width="148" Height="331" Name="blueborder"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2 0 2 0">
+                <StackPanel>
+                    
+                    <!--#region ACCOUNT INFO & PASS CHANGE-->
+                    <DockPanel Height="16" Margin="2 0 2 0">
+                        <TextBlock Text="PROFILE" FontFamily="../Fonts/rbt/#Roboto" FontWeight="SemiBold"
+                                   Foreground="#FFF" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   FontSize="9"/>
+                        <Button Template="{StaticResource TransparentButton}" HorizontalAlignment="Right"
+                                Cursor="Hand" Click="Logout_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="LOGOUT" FontFamily="../Fonts/rbt/#Roboto" FontWeight="SemiBold"
+                                           Foreground="#C0FFFFFF" HorizontalAlignment="Right" FontSize="9"/>
+                                <Image Source="Icons/logout.png" Height="10"/>
+                            </StackPanel>
+                        </Button>
+                    </DockPanel>
+                    <StackPanel>
+                        <Border Width="140" Height="20" Background="#ECECEC" Margin="0 0 0 3">
+                            <TextBlock x:Name="NameBlock" Foreground="#266986" FontSize="9"
+                                       FontFamily="../Fonts/rbt/#Roboto" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="3 0 0 0" TextWrapping="Wrap"/>
+                        </Border>
+                        <Border Width="140" Height="20" Background="#ECECEC" Margin="0 0 0 3">
+                            <TextBlock x:Name="EmailBlock" Foreground="#266986" FontSize="9"
+                                       FontFamily="../Fonts/rbt/#Roboto" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="3 0 0 0" TextWrapping="Wrap"/>
+                        </Border>
+                        <Border Width="140" Height="20" Background="#ECECEC" Margin="0 0 0 3">
+                            <TextBlock x:Name="PhoneBlock" Foreground="#266986" FontSize="9"
+                                       FontFamily="../Fonts/rbt/#Roboto" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="3 0 0 0" TextWrapping="Wrap"/>
+                        </Border>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 3">
+                            <elements:PasswordInput x:Name="NewPassInput"
+                                                Placeholder="New Password" TextForeground="#266986" BorderColor="#FFF"
+                                                Width="92" Height="20" FontSize="9"/>
+                            <Button x:Name="ChangePassButton" Template="{StaticResource PassChangeButton}"
+                                    Width="48" Height="20" Content="CHANGE" Foreground="#FFF"
+                                    FontFamily="../Fonts/#Lexend Deca"
+                                    FontWeight="Medium" FontSize="9"/>
+                        </StackPanel>
+                        <StackPanel x:Name="ConfirmPassPanel" Height="0"
+                                    Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 3">
+                            <elements:PasswordInput x:Name="ConfirmPassInput" Placeholder="Confirm Password" TextForeground="#266986" BorderColor="#FFF"
+                                                Width="92" Height="20" FontSize="9"/>
+                            <Button x:Name="ConfirmPassButton" Template="{StaticResource PassChangeButton}"
+                                    Width="48" Height="20" Content="CONFIRM" Foreground="#FFF"
+                                    FontFamily="../Fonts/#Lexend Deca"
+                                    FontWeight="Medium" FontSize="9"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <!--#endregion-->
+                    
+                    <!--#region NOTIFICATIONS-->
+                    <DockPanel Height="16" Margin="2 0 2 0">
+                        <TextBlock Text="NOTIFICATIONS" FontFamily="../Fonts/rbt/#Roboto" FontWeight="SemiBold"
+                                   Foreground="#FFF" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   FontSize="9"/>
+                        <Button Template="{StaticResource TransparentButton}" HorizontalAlignment="Right"
+                                Cursor="Hand" Click="ClearAll_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="CLEAR ALL" FontFamily="../Fonts/rbt/#Roboto" FontWeight="SemiBold"
+                                           Foreground="#C0FFFFFF" HorizontalAlignment="Right" FontSize="9"/>
+                            </StackPanel>
+                        </Button>
+                    </DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="6"/>
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer x:Name="Scroller" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" MaxHeight="202"
+                                      ScrollChanged="Scroller_ScrollChanged">
+                            <StackPanel x:Name="NotificationsList">
+                                
+                            </StackPanel>
+                        </ScrollViewer>
+                        <Border Grid.Column="1" x:Name="ScrollBorder" Background="#FFF" Margin="2 0 2 0" VerticalAlignment="Top"/>
+                    </Grid>
+                    <!--#endregion-->
+                    
+                </StackPanel>
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.6" ShadowDepth="4" Direction="315" BlurRadius="4"/>
+                </Border.Effect>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

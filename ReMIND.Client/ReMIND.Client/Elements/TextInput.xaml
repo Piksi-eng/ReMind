@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="ReMIND.Client.Elements.TextInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMIND.Client.Elements"
+             KeyDown="TextInput_KeyDown" Cursor="IBeam" Loaded="UserControl_Loaded"
+             mc:Ignorable="d" RenderOptions.EdgeMode="Aliased"
+             RenderOptions.BitmapScalingMode="HighQuality" IsEnabledChanged="UserControl_IsEnabledChanged">
+    
+    <Grid>
+        <Border x:Name="ElementBorder" Background="{Binding Path=TextBackground}"
+                BorderBrush="{Binding Path=BorderColor}" BorderThickness="1" SnapsToDevicePixels="True">
+
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Path=ImageSource}" Margin="8 8 4 8" x:Name="Icon"/>
+                <TextBlock Text="{Binding Path=Placeholder}" x:Name="PlaceholderLabel" VerticalAlignment="Center"
+                           FontFamily="../Fonts/#Lexend Deca" Foreground="{Binding Path=TextForeground}"
+                           Opacity="0.5" Margin="4 0 10 0"/>
+                <TextBox x:Name="TextInputBox" CaretBrush="{Binding Path=TextForeground}"
+                         FontFamily="../Fonts/#Lexend Deca" Foreground="{Binding Path=TextForeground}"
+                         Background="Transparent" BorderBrush="Transparent"
+                         VerticalAlignment="Center" BorderThickness="0"
+                         Text="{Binding Path=TextValue}" Margin="4 0"
+                         TextChanged="TextInputBox_TextChanged" TextWrapping="Wrap"
+                         MaxWidth="{Binding Path=ActualWidth}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+
+    <UserControl.Effect>
+        <DropShadowEffect BlurRadius="2" ShadowDepth="1" Direction="270" Opacity="{Binding Path=ShadowOpacity, Mode=TwoWay, FallbackValue=0.25}"/>
+    </UserControl.Effect>
+    
+</UserControl>
